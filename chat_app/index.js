@@ -1,6 +1,8 @@
+'use strict';
+
+const apiai = require('apiai');
+const APIAI_TOKEN = apiai('');
 const APIAI_SESSION_ID = '';
-const APIAI_TOKEN = '';
-const apiai = require('apiai')(APIAI_TOKEN);
 
 const express = require('express');
 const app = new express();
@@ -12,7 +14,7 @@ const server = app.listen(5000, () => {
 	console.log(`\nExpress server now listening on Port: ${server.address().port}...`);
 } );
 
-const io = require('socket.io') (server);
+const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
 	console.log("User has joined the chat.");
@@ -29,7 +31,7 @@ io.on('connection', (socket) => {
 		console.log(`\nMessage from User: ${text}`);
 
 		// sending the Request (User's message) to API.AI
-	    let req_Apiai = apiai.textRequest(text, { sessionId: APIAI_SESSION_ID } );
+	    let req_Apiai = APIAI_TOKEN.textRequest(text, { sessionId: APIAI_SESSION_ID } );
 
 	    // receiving a Response (ChatBot's reply) from API.AI 
 	    req_Apiai.on('response', (response) => {

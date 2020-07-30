@@ -24,12 +24,11 @@ speechRecog.onspeechstart = () => {
 speechRecog.onresult = (event) => {
 	console.log('Bot response detected...');
 
-	const last = event.results.length - 1;
-	const text = event.results[last][0].transcript;
+	let last = event.results.length - 1;
+	let text = event.results[last][0].transcript;
 	outputYou.textContent = text;
 	console.log(`\nConfidence: ${event.results[0][0].confidence}.`);
 
-	// socket.io functionality
 	socket.emit('user message', text);
 };
 
@@ -44,7 +43,7 @@ speechRecog.onerror = (event) => {
 
 function speechSynth(text) {
 	const synth = window.speechSynthesis;
-	const utterance = new speechSynthesisUtterance();
+	const utterance = new SpeechSynthesisUtterance();
 	utterance.text = text;
 	synth.speak(utterance);
 }
